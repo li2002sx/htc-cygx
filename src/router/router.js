@@ -21,6 +21,11 @@ const AuthNotify = r => require.ensure([], () => r(require('../frames/wx/AuthNot
 const TransIndex = r => require.ensure([], () => r(require('../frames/trans/Index.vue')), 'TransIndex')
 const TransResult = r => require.ensure([], () => r(require('../frames/trans/Result.vue')), 'TransResult')
 const TransTip = r => require.ensure([], () => r(require('../frames/trans/Tip.vue')), 'TransTip')
+
+const PriceIndex = r => require.ensure([], () => r(require('../frames/price/Index.vue')), 'PriceIndex')
+const PriceSeries = r => require.ensure([], () => r(require('../frames/price/Series.vue')), 'PriceSeries')
+const PriceModels = r => require.ensure([], () => r(require('../frames/price/Models.vue')), 'PriceModels')
+const PriceModels = r => require.ensure([], () => r(require('../frames/price/Models.vue')), 'PriceModels')
 export default [{
   path: '',
   redirect: '/index'
@@ -102,4 +107,13 @@ export default [{
 }, {
   path: '/trans/tip',
   component: TransTip
+}, {
+  path: '/price',
+  component: PriceIndex
+}, {
+  path: '/price/series',
+  component: PriceSeries
+}, {
+  path: '/price/models',
+  component: PriceModels
 }]

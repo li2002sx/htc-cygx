@@ -13,24 +13,73 @@
         z-index: 18;
 
         input{
-            .input-text(#e6e6e8;92%;30px;0;14px 22px);
+            .input-text(#e6e6e8;98%;30px;0;14px 22px);
             border: none;
             .circle(10px);
             font-size: 30px;
+            &::-webkit-input-placeholder {
+                color:#ccc;
+            }
         }
         button{
             .elesize(100%;58px);
-            .tc;
+            .tr;
             .font(30px);
             background: none;
             border: none;
 
         }
         &:before{
-            display: none;
+          // .icon("../images/icon/ico-search.png"; center; center; 31px; 32px);
+          // .pos-alt(50%;50%);
+          // .margin(-16px 0 0 -170px);
+          // content: "";
+          // transition: linear .6s;
+          display: none;
         }
     }
+    // .cur{
+    //     &:before{
+    //         display: none;
+    //     }
+    // }
+}
+.searchtemp{
+    // height: 88px;
+    .searchmod{
+        .bg-color(#e6e6e8);
+        .padding(15px 20px);
+        .position(fixed);
+        .elesize(100%;88px);
+        .circle(0);
+        box-sizing: border-box;
+        z-index: 18;
 
+        input{
+            .input-text(#fff;92%;30px;0;14px 22px);
+            border: none;
+            .circle(10px);
+            font-size: 30px;
+            border-radius: 30px;
+            &::-webkit-input-placeholder {
+                color:#ccc;
+            }
+        }
+        input[type="text"]:disabled{
+          background-color: #fff;
+        }
+        button{
+            .none;
+
+        }
+        &:before{
+          .icon("../../../images/icon/ico-search.png"; center; center; 31px; 32px);
+          .pos-alt(50%;50%);
+          .margin(-16px 0 0 -130px);
+          content: "";
+          transition: linear .6s;
+        }
+    }
 }
 
 //keywordlist
@@ -43,4 +92,165 @@
 }
 .sharelist{
     padding-top: 30px;
+}
+
+.kwbox{
+    .padding(30px);
+    dt{
+        .p_r;
+        .lh(30px);
+        .pb(20px);
+        border-bottom: 1px solid #ededed;
+        h4{
+            .font(32px);
+        }
+        .ref{
+            color: red;
+            .pos-atr;
+        }
+    }
+    .kwtag{
+        .inline-block;
+        .bg-color(#ededed);
+        .padding(0 16px);
+        .mr(20px);
+        .mt(30px);
+        .circle(5px);
+        .font(26px;50px);
+        white-space: nowrap;
+    }
+}
+// 找运输
+.findtransport{
+  background: url("../images/transport.jpg") no-repeat center 0;
+  background-size: 100% auto;
+  height: 100%;
+}
+.transport{
+  .padding(210px 60px 0);
+  min-height: 800px;
+  p {
+      line-height: 84px;
+      font-size: 30px;
+  }
+  dt{
+      p{
+          border-bottom: 1px solid #ededed;
+          width: 270px;
+          .p_r;
+          label{
+              position: absolute;
+              font-size: 24px;
+              color: #999;
+              top:-40px;
+          }
+      }
+      div{
+          .tc;
+      }
+      p:last-child{
+          .tr;
+          label{
+              right: 0;
+          }
+      }
+  }
+  dd{
+      border-bottom: 1px solid #ededed;
+      .mt(30px);
+      p:last-child{
+          .tr;
+          &:after{
+              border-top:3px solid #ccc;
+              border-right: 3px solid #ccc;
+              transform: rotate(45deg);
+              content: '';
+              width: 15px;
+              height: 15px;
+              .inline-block;
+              top:-3px;
+          }
+      }
+  }
+  .btnbox{
+      .pt(60px);
+      button{
+          .button(#3c93fd; #3c93fd; 100%; 87px; 30px; #fff; #3c93fd; #fff);
+          border-radius: 10px;
+          .ico-zoom{
+              background-image: url("../images/icon/ico-zoom.png");
+              .mr(10px);
+              top: -2px;
+          }
+      }
+  }
+  .history{
+      .pt(50px);
+      li{
+          font-size: 26px;
+          color: #666;
+          line-height: 70px;
+      }
+  }
+}
+
+// 运输列表
+.transportlist{
+  dd{
+      border-bottom: 10px solid #f8f8f8;
+      .layout{
+          .padding(30px);
+          h4{
+              font-size: 32px;
+          }
+          span{
+              .tr;
+              .pl(15px);
+              font-size: 28px;
+              color: #666;
+
+          }
+      }
+      p{
+          .padding(0 30px);
+          font-size: 24px;
+          color: #999;
+          i{
+              color: #ff1e00;
+              .pl(15px)
+          }
+          strong{
+              color: #ff1e00;
+              font-size: 32px;
+              .normal;
+          }
+      }
+      a{
+          .block;
+          border-top: 1px solid #ededed;
+          .font(28px;88px);
+          .tc;
+          color:#62a7fc;
+          .mt(30px);
+      }
+  }
+}
+
+// 车辆类型
+.carstype{
+  dd{
+      border-bottom: 20px solid #f8f8f8;
+      .padding(10px 30px);
+  }
+  h4{
+      border-bottom: 1px solid #ededed;
+      .font(28px;100px);
+  }
+  p{
+      font-size: 18px;
+      color: #666;
+      .lh(1.4);
+      .padding(20px 0 );
+  }
+
 }

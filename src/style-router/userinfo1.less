@@ -1,0 +1,167 @@
+@import '../style/common/mixins';//mixins
+
+.usermod{
+    .padding(0 0 0 30px);
+    .font(30px);
+    .p_r;
+    border-top: 10px solid #f8f8f8;
+    dl{
+        .p_r;
+        .pr(65px);
+        border-bottom: 1px solid #ededed;
+        &:last-child{
+            border-bottom: none;
+        }
+        &:after{
+            .square(15px);
+            .pos-atr(50%;30px);
+            border-right: 2px solid #ccc;
+            border-top: 2px solid #ccc;
+            transform: rotate(45deg);
+            margin-top: -9px;
+            content: "";
+        }
+    }
+    dd{
+        .padding(25px 0);
+        .lh(1.7);
+        &:last-child{
+            .tr;
+        }
+        .ico-unlogin{
+            .square(100px);
+            background-size: 50%;
+            img{
+                .circle(50%);
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+        i{
+            color: #ccc;
+        }
+    }
+    .btnbox{
+        .tc;
+        .padding(30px 0 130px);
+        .btnred{
+            width: 490px;
+        }
+    }
+}
+.userinfobox{
+    .padding(30px);
+    .font(30px);
+    .p_r;
+    border-top: 10px solid #f8f8f8;
+    .btnbox{
+        .pt(50px);
+        .tc;
+        .btnred{
+            width: 490px;
+        }
+    }
+    .ico-unlogin{
+        .square(100px);
+        background-size: 50%;
+        img{
+            .circle(50%);
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    .userinfo{
+        color: #989898;
+        dd{
+            .mb(15px);
+            .lh(1.3);
+            label{
+                .tc;
+            }
+        }
+        dd .td:first-child{
+            width: 125px;
+        }
+        h4{
+            .normal;
+            .pt(9px);
+            color: #333;
+            i{
+                .ml(10px);
+            }
+        }
+        p{
+            .font(26px);
+            .pt(15px);
+
+        }
+        .tag{
+            .inline-block;
+            .font(20px;32px);
+            .bg-color(#f8f8f8);
+            .padding(0 15px);
+            .mt(8px);
+            .mb(10px);
+            color: #363636;
+        }
+    }
+
+}
+
+// car info
+.carinfo{
+    .mt(-20px);
+    dd{
+        .font(30px);
+        .p_r;
+        .padding(20px 0);
+        .mt(45px);
+        border-bottom: 1px solid #ededed;
+        label{
+            .pos-alt(0;-20px);
+            .font(24px);
+            color: #cbcbcb;
+        }
+        p{
+            .lh(1.5);
+            .font(30px;1.5);
+        }
+        &:last-child{
+            border-bottom: none;
+        }
+    }
+    li{
+        width: 33.33%;
+        .p_r;
+        .font(30px);
+        .padding(20px 0);
+    }
+}
+
+// 成交客户
+.guesttitle{
+    .normal;
+    .p_r;
+    .pb(30px);
+    &:after{
+        .square(15px);
+        .pos-atr(20px;0);
+        border-right: 2px solid #ccc;
+        border-top: 2px solid #ccc;
+        transform: rotate(45deg);
+        margin-top: -9px;
+        content: "";
+    }
+}
+.guestinfo{
+    .mr(-20px);
+    width: 104%;
+    dd{
+        padding-right: 20px;
+    }
+    img{
+        // width: 100%;
+        width: 150px;
+        height: 150px;
+    }
+}

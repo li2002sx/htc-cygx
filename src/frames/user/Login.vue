@@ -62,7 +62,12 @@ export default {
       }
       this.post('/rest/user/login', param, function (result) {
         if (result.status === 1) {
-          this.setStore('token', result.user.token)
+          let user = result.user
+          let userInfo = {
+            userId: user.userId,
+            token: user.token
+          }
+          this.setStore(global.userInfo, JSON.stringify(userInfo))
           window.setTimeout(() => {
             this.toastShow('success', '登陆成功')
             this.loginToUrl()
@@ -76,6 +81,6 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/login.css";
+<style lang="less">
+@import "../../style-router/login.less";
 </style>

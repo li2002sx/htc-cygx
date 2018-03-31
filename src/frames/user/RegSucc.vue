@@ -38,6 +38,6 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/login.css";
+<style lang="less">
+@import "../../style-router/login.less";
 </style>

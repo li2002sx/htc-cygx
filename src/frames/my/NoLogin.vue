@@ -15,11 +15,11 @@
         <ul class="layout">
           <li class="td" @click="tipLogin">
             <i class="ico-u-car"></i>
-            <p>共享车源</p>
+            <p>我的共享车源</p>
           </li>
           <li class="td" @click="tipLogin">
             <i class="ico-u-guest"></i>
-            <p>成交客户</p>
+            <p>我的成交客户</p>
           </li>
           <li class="td" @click="tipLogin">
             <i class="ico-u-vip"></i>
@@ -69,6 +69,6 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/my.css";
+<style lang="less">
+@import "../../style-router/my.less";
 </style>

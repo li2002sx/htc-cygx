@@ -6,17 +6,19 @@
     z-index: 1;
     > div{
         background: no-repeat center 0;
-        background-size: auto 1334px;
-        height: 1334px;
+        // background-size: auto 1334px;
+        // height: 4311px;
+        // height: 1959px;
         max-width: 750px;
         .margin(0 auto);
+        img{max-width:100%;}
     }
 }
 .colormod{
     .padding(985px 30px 0);
     .p_r;
     height: 349px;
-    z-index: 2;
+    z-index: 5;
     .colorlist{
         background: rgba(0,0,0,.75);
         .padding(10px 0 10px 10px);
@@ -37,11 +39,24 @@
     }
     .btnbox{
         .tr;
-        .pt(55px);
+        position: fixed;
+        right: 30px;
+        bottom:50px;
+        z-index:1;
         button{
             width: 210px;
         }
     }
+    .btnboxleft{
+      .tr;
+      position: fixed;
+      left: 30px;
+      bottom:50px;
+      z-index:1;
+      button{
+          width: 210px;
+      }
+  }
 }
 .imgmod{
     .p_r;
@@ -51,6 +66,7 @@
         .tc;
         .font(30px);
         color: #fff;
+        font-weight: bold;
     }
     .imgslider{
         .margin(30px);
@@ -58,21 +74,21 @@
     .imgdot{
         .pt(25px);
         .tc;
-        i{
+        a i{
             .inline-block;
             .bg-color(#1e2a30);
             .square(10px);
             .circle(50%);
             .margin(0 10px);
             border: 1px solid #b0b9be;
-            &.on{
+            .active{
                 .bg-color(#cb305e);
             }
         }
     }
     .imglist{
-        .bg-color(#5d1616);
-        .margin(30px 79px);
+        // .bg-color(#5d1616);
+        .margin(30px 26px);
         .padding(20px 0 20px 20px);
         img{
             .block;
@@ -104,6 +120,7 @@
         .tc;
         .font(30px);
         color: #fff;
+        font-weight: bold;
     }
     .linkbox{
         .pt(30px);
@@ -115,4 +132,22 @@
             max-width: 100%;
         }
     }
+}
+.sharetip{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(46, 46, 45, 0.9);
+  height: 100%;
+  width: 100%;
+  z-index: 6;
+  display: none;
+}
+.sharetip div{
+  background: url(../images/share.png) left center no-repeat;
+  background-size: contain;
+  width: 591px;
+  height: 410px;
+  margin-top: 50px;
+  margin-left: 80px;
 }

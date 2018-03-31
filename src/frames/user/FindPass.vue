@@ -59,8 +59,16 @@ export default {
       }
       this.post('/rest/user/findpass', param, function (result) {
         if (result.status === 1) {
-          this.toastShow('success', '设置成功')
-          this.toUrl('/index')
+          let user = result.user
+          let userInfo = {
+            userId: user.userId,
+            token: user.token
+          }
+          this.setStore(global.userInfo, JSON.stringify(userInfo))
+          window.setTimeout(() => {
+            this.toastShow('success', '设置成功')
+            this.toUrl('/index')
+          }, 500)
         } else {
           this.toastShow('text', result.msg)
         }
@@ -70,6 +78,6 @@ export default {
 }
 </script>
 
-<style>
-@import '../../style-router/login.css';
+<style lang="less">
+@import '../../style-router/login.less';
 </style>

@@ -1,9 +1,13 @@
 <template>
   <div id="app">
-      <!--<loading v-model="isLoading"></loading>-->
-      <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
+    <!--<loading v-model="isLoading"></loading>-->
+    <transition name="router-fade" mode="out-in">
+      <!-- <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')"> -->
+       <router-view></router-view>
+      <!-- <keep-alive>
         <router-view></router-view>
-      </transition>
+      </keep-alive> -->
+    </transition>
   </div>
 </template>
 
@@ -40,8 +44,12 @@ export default {
 </script>
 
 <style lang="less">
-@import '~vux/src/styles/reset.less';
-@import './style-router/public.css';
+/*@import '~vux/src/styles/reset.less';*/
+
+@import './style-router/public.less';
+
+
+
 
 /*@import './style/style.css';*/
 
@@ -54,7 +62,8 @@ export default {
 
 /*}*/
 
-.vux-pop-out-enter-active,
+
+/* .vux-pop-out-enter-active,
 .vux-pop-out-leave-active,
 .vux-pop-in-enter-active,
 .vux-pop-in-leave-active {
@@ -86,23 +95,15 @@ export default {
 .vux-pop-in-leave-active {
   opacity: 0;
   transform: translate3d(-100%, 0, 0);
+}*/
+
+.router-fade-enter-active,
+.router-fade-leave-active {
+  transition: opacity .2s;
 }
 
-
-/*.router-fade-enter-active, .router-fade-leave-active {*/
-
-
-/*transition: opacity .2s;*/
-
-
-/*}*/
-
-
-/*.router-fade-enter, .router-fade-leave-active {*/
-
-
-/*opacity: 0;*/
-
-
-/*}*/
+.router-fade-enter,
+.router-fade-leave-active {
+  opacity: 0;
+}
 </style>

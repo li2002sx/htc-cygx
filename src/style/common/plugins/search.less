@@ -7,19 +7,20 @@
     .p_r;
     height: 68px;
     &:before{
-        .icon("../images/icon/ico-search.png"; center; center; 31px; 32px);
+        .icon("../../../images/icon/ico-search.png"; center; center; 31px; 32px);
         .pos-alt(50%;50%);
-        .margin(-16px 0 0 -110px);
+        .margin(-16px 0 0 -95px);
         content: "";
         transition: linear .6s;
     }
     input{
-        .input-text(transparent;90%;26px;transparent;21px 0);
+        .input-text(transparent;100%;26px;transparent;21px 0);
         .font(26px;26px);
         .tc;
         border:none;
         &::-webkit-input-placeholder {
             color:#cbcbcb;
+            line-height:normal;
         }
     }
     &.cur{
@@ -29,7 +30,7 @@
         }
         input{
             .tl;
-            .pl(60px);
+            // .pl(60px);
         }
     }
 }

@@ -4,6 +4,7 @@
     <footerMenu tab="1"></footerMenu>
     <!--mybox  -->
     <div class="mybox">
+      <router-link to="/my/info" class="ico-modify" title="修改资料"></router-link>
       <!--login  -->
       <div class="loginbox" @click="toUrl('/my/info')">
         <i class="ico-unlogin">
@@ -12,7 +13,6 @@
         <h4>{{realName}}
           <i class="ico-gold" v-if="vip"></i>
           <i class="ico-silver" v-else></i>
-          <i class="ico-modify"></i>
         </h4>
         <p>{{mobile}}</p>
       </div>
@@ -22,11 +22,11 @@
         <ul class="layout">
           <li class="td" @click="toUrl('/my/car')">
             <i class="ico-u-car"></i>
-            <p>共享车源</p>
+            <p>我的共享车源</p>
           </li>
           <li class="td" @click="toUrl('/my/photo')">
             <i class="ico-u-guest"></i>
-            <p>成交客户</p>
+            <p>我的成交客户</p>
           </li>
           <li class="td" @click="toUrl('/my/vip')">
             <i class="ico-u-vip"></i>
@@ -80,13 +80,13 @@ export default {
       }.bind(this))
     },
     logout () {
-      this.removeStore('token')
+      this.removeStore(global.userInfo)
       this.toUrl('/index')
     }
   }
 }
 </script>
 
-<style>
-@import "../../style-router/my.css";
+<style lang="less">
+@import "../../style-router/my.less";
 </style>

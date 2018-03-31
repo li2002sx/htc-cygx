@@ -9,7 +9,7 @@
         <dd class="td">
           <i class="ico-unlogin">
             <img :src="userPic" />
-            <input type="file" accept="image/*" @change="onFileChange" class="allfile" />
+            <input type="file" accept="image/*" @click="selectFile" @change="onFileChange" class="allfile" />
           </i>
         </dd>
       </dl>
@@ -135,20 +135,33 @@
       </div>
     </div>
     <vueCropper ref="cropper" :img="userPic" :outputSize="1" outputType="jpeg" :autoCrop="true" :fixed="true" :canScale="true"></vueCropper>
+    <!--mybox end  -->
+    <div v-transfer-dom>
+      <popup v-model="showTip" position="bottom" :show-mask="false">
+        <div class="position-vertical-demo">
+          手机拍照图片较大，加载较慢，请耐心等待
+        </div>
+      </popup>
+    </div>
   </section>
 </template>
 
 <script>
-import { cookie, Group, PopupPicker } from 'vux'
+import { cookie, Group, PopupPicker, TransferDom, Popup } from 'vux'
 import footerMenu from '../../components/Footer.vue'
 import vueCropper from 'vue-cropper'
+import Exif from 'exif-js'
 export default {
+  directives: {
+    TransferDom
+  },
   components: {
     cookie,
     Group,
     PopupPicker,
     footerMenu,
-    vueCropper
+    vueCropper,
+    Popup
   },
   data () {
     return {
@@ -166,7 +179,8 @@ export default {
       city: {},
       address: '',
       wxCode: '',
-      sexData: [{ name: '请选择', value: -1 }, { name: '女', value: 0 }, { name: '男', value: 1 }]
+      sexData: [{ name: '请选择', value: -1 }, { name: '女', value: 0 }, { name: '男', value: 1 }],
+      showTip: false
     }
   },
   created () {
@@ -316,7 +330,11 @@ export default {
         }
       }.bind(this))
     },
+    selectFile () {
+
+    },
     onFileChange (e) {
+      this.showTip = true
       var files = e.target.files || e.dataTransfer.files
       if (!files.length) return
       this.createImage(files)
@@ -328,16 +346,48 @@ export default {
       }
       var that = this
       var leng = file.length
+      // that.$vux.toast.show({
+      //   type: 'text',
+      //   text: '请耐心等待图片加载',
+      //   time: 1000000,
+      //   position: 'middle'
+      // })
+      let Orientation
       for (var i = 0; i < leng; i++) {
+        // 去获取拍照时的信息，解决拍出来的照片旋转问题
+        Exif.getData(file[i], function () {
+          Orientation = Exif.getTag(this, 'Orientation')
+        })
+
         var reader = new FileReader()
         reader.readAsDataURL(file[i])
         reader.onload = function (e) {
-          that.userPic = e.target.result
-          document.querySelector('.vue-cropper').style.display = ''
-          that.$refs.cropper.startCrop()
-          document.getElementById('btn_cropper').style.display = ''
+          let result = e.target.result
+
+          // 判断图片是否大于100K,是就直接上传，反之压缩图片
+          if (result.length <= (100 * 1024)) {
+            that.userPic = result
+            that.startCrop()
+          } else {
+            var img = new Image()
+            img.src = result
+            img.onload = function () {
+              let data = that.compress(img, Orientation)
+              that.userPic = data
+              that.startCrop()
+              // that.$vux.toast.hide()
+            }
+          }
+          // that.userPic = e.target.result
+          // that.startCrop()
         }
       }
+    },
+    startCrop () {
+      this.showTip = false
+      document.querySelector('.vue-cropper').style.display = ''
+      this.$refs.cropper.startCrop()
+      document.getElementById('btn_cropper').style.display = ''
     },
     saveCropper () {
       document.querySelector('.vue-cropper').style.display = 'none'
@@ -351,12 +401,23 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/userinfo.css";
- .btncropper {
+<style lang="less">
+@import "../../style-router/userinfo.less";
+.btncropper {
   position: fixed;
   left: 20%;
   bottom: 1%;
   z-index: 1;
+}
+
+.position-vertical-demo {
+  background-color: #ffe26d;
+  color: #000;
+  text-align: center;
+  padding: 15px;
+}
+
+.vux-popup-dialog {
+  bottom: 100px;
 }
 </style>

@@ -20,11 +20,11 @@ export default {
   },
   methods: {
     toMy () {
-      let token = this.getStore('token')
-      if (token == null || token === '') {
-        this.$router.push('/my/nologin')
+      let userInfo = this.getStore(global.userInfo)
+      if (userInfo == null || userInfo === '') {
+        this.toUrl('/my/nologin')
       } else {
-        this.$router.push('/my')
+        this.toUrl('/my')
       }
     }
   }

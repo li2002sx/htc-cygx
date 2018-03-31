@@ -2,12 +2,13 @@
  * 自定义常用类
  */
 
-global.webUrl = 'http://www.gongxiangcheyuan.com/'
+global.userInfo = 'gxcy_userinfo'
+
+global.webUrl = 'http://m.gongxiangcheyuan.com/'
 // global.webUrl = 'http://172.168.1.26:8080/'
-// global.webUrl = 'http://gxcy.iubeier.com/'
 
 // global.apiUrl = 'http://172.168.1.26:8071/'
-global.apiUrl = 'http://chechehulian.cn/'
+global.apiUrl = 'http://www.chechehulian.cn/'
 
 global.wxAppId = 'wx04a755df9d6d77fb'
 

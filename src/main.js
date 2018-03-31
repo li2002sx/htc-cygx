@@ -52,43 +52,63 @@ FastClick.attach(document.body)
 Vue.config.productionTip = false
 
 // simple history management
-const history = window.sessionStorage
-history.clear()
-let historyCount = history.getItem('count') * 1 || 0
-history.setItem('/', 0)
+// const history = window.sessionStorage
+// history.clear()
+// let historyCount = history.getItem('count') * 1 || 0
+// history.setItem('/', 0)
 
-router.beforeEach(function (to, from, next) {
-  store.commit('updateLoadingStatus', true)
-  const toIndex = history.getItem(to.path)
-  const fromIndex = history.getItem(from.path)
+// router.beforeEach(function (to, from, next) {
+// store.commit('updateLoadingStatus', true)
+// const toIndex = history.getItem(to.path)
+// const fromIndex = history.getItem(from.path)
 
-  if (toIndex) {
-    if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
-      store.commit('updateDirection', 'forward')
-    } else {
-      store.commit('updateDirection', 'reverse')
-    }
-  } else {
-    ++historyCount
-    history.setItem('count', historyCount)
-    to.path !== '/' && history.setItem(to.path, historyCount)
-    store.commit('updateDirection', 'forward')
-  }
+// if (toIndex) {
+//   if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
+//     store.commit('updateDirection', 'forward')
+//   } else {
+//     store.commit('updateDirection', 'reverse')
+//   }
+// } else {
+//   ++historyCount
+//   history.setItem('count', historyCount)
+//   to.path !== '/' && history.setItem(to.path, historyCount)
+//   store.commit('updateDirection', 'forward')
+// }
 
-  if (/\/http/.test(to.path)) {
-    let url = to.path.split('http')[1]
-    window.location.href = `http${url}`
-  } else {
-    next()
-  }
-})
+// if (/\/http/.test(to.path)) {
+//   let url = to.path.split('http')[1]
+//   window.location.href = `http${url}`
+// } else {
+//   next()
+// }
+// })
 
-router.afterEach(function (to) {
-  store.commit('updateLoadingStatus', false)
-})
+// router.afterEach(function (to) {
+// store.commit('updateLoadingStatus', false)
+// })
 
 // Vue.prototype.axios = axios
 const baseURL = global.apiUrl
+
+Vue.prototype.getFieldByUseInfo = function (field) {
+  let userInfo = window.localStorage.getItem(global.userInfo)
+  if (userInfo !== null) {
+    userInfo = JSON.parse(userInfo)
+    if (userInfo !== null) {
+      return Reflect.get(userInfo, field) || ''
+    }
+  }
+  return ''
+}
+
+Vue.prototype.isLogin = function () {
+  if (this.getFieldByUseInfo('token') === '') {
+    return false
+  } else {
+    return true
+  }
+}
+
 // axiosGet请求
 Vue.prototype.get = function (url, params, callback) {
   // 显示
@@ -100,7 +120,7 @@ Vue.prototype.get = function (url, params, callback) {
     method: 'get',
     baseURL: baseURL,
     headers: {
-      'token': window.localStorage.getItem('token')
+      'token': this.getFieldByUseInfo('token')
     },
     params: params,
     withCredentials: true, // default
@@ -123,17 +143,19 @@ Vue.prototype.get = function (url, params, callback) {
 }
 
 // axiosPost请求
-Vue.prototype.post = function (url, data, callback) {
-  // 显示
-  this.$vux.loading.show({
-    text: '加载中...'
-  })
+Vue.prototype.post = function (url, data, callback, showLoad) {
+  if (showLoad === true) {
+    // 显示
+    this.$vux.loading.show({
+      text: '加载中...'
+    })
+  }
   axios({
     url: url,
     method: 'post',
     baseURL: baseURL,
     headers: {
-      'token': window.localStorage.getItem('token'),
+      'token': this.getFieldByUseInfo('token'),
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     transformRequest: [function (data) {
@@ -183,7 +205,7 @@ Vue.prototype.postForm = function (url, data, callback) {
     method: 'post',
     baseURL: baseURL,
     headers: {
-      'token': window.localStorage.getItem('token'),
+      'token': this.getFieldByUseInfo('token'),
       'Content-Type': 'multipart/form-data'
     },
     transformRequest: [function (data) {
@@ -231,14 +253,18 @@ Vue.prototype.toUrl = function (url) {
       this.removeStore('referrer')
     }
   }
-  if (url === '/my/vip') {
-    if (location.href.indexOf('?#') > -1) {
-      this.$router.push(url)
-    } else {
-      location.href = '?#' + url
-    }
-  } else {
+  if (location.href.indexOf('?#') > -1) {
     this.$router.push(url)
+  } else {
+    location.href = '?#' + url
+  }
+  // if (url === '/my/vip' || url.indexOf('/car/template') > -1) {
+
+  // } else {
+  //   this.$router.push(url)
+  // }
+  if (url === -1) {
+    window.history.go(-1)
   }
 }
 
@@ -334,6 +360,67 @@ Vue.prototype.wxShare = function (title, desc, imgUrl, link) {
           },
           cancel: function () {
             // 用户取消分享后执行的回调函数
+          }
+        })
+      }.bind(this))
+
+      this.$wechat.error(function (res) {
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+      })
+    } else {
+      this.toastShow('text', '分享失败')
+    }
+  }.bind(this))
+}
+
+Vue.prototype.wxChooseImage = function (callback) {
+  this.get('/rest/user/wxshareconf', { url: location.href }, function (result) {
+    if (result !== null) {
+      this.$wechat.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: result.appId, // 必填，公众号的唯一标识
+        timestamp: result.timestamp, // 必填，生成签名的时间戳
+        nonceStr: result.nonceStr, // 必填，生成签名的随机串
+        signature: result.signature, // 必填，签名，见附录1
+        jsApiList: ['chooseImage', 'getLocalImgData'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      })
+      this.$wechat.ready(function () {
+        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+        this.$wechat.chooseImage({
+          count: 9, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            callback(res.localIds) // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          }
+        })
+      }.bind(this))
+      this.$wechat.error(function (res) {
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+      })
+    } else {
+      this.toastShow('text', '初始化失败')
+    }
+  }.bind(this))
+}
+
+Vue.prototype.wxGetLocalImgData = function (localId, callback) {
+  this.get('/rest/user/wxshareconf', { url: location.href }, function (result) {
+    if (result !== null) {
+      this.$wechat.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: result.appId, // 必填，公众号的唯一标识
+        timestamp: result.timestamp, // 必填，生成签名的时间戳
+        nonceStr: result.nonceStr, // 必填，生成签名的随机串
+        signature: result.signature, // 必填，签名，见附录1
+        jsApiList: ['chooseImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      })
+      this.$wechat.ready(function () {
+        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+        this.$wechat.getLocalImgData({
+          localId: localId, // 图片的localID
+          success: function (res) {
+            callback(res.localData) // localData是图片的base64数据，可以用img标签显示
           }
         })
       }.bind(this))

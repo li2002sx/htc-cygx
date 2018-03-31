@@ -1,7 +1,7 @@
 <template>
   <section>
     <div v-title data-title="我的VIP会员"></div>
-    <footerMenu tab="1"></footerMenu>
+    <!-- <footerMenu tab="1"></footerMenu> -->
     <!--vip  -->
     <div class="vipbox">
       <div class="headbg">
@@ -47,7 +47,7 @@ export default {
   },
   filters: {
     amount: function (value) {
-      return (value / 100).toFixed(2)
+      return (value / 100).toFixed(0)
     }
   },
   computed: {},
@@ -72,6 +72,7 @@ export default {
             productId: item.productId,
             openId: openId
           }
+          let that = this
           this.post('/rest/userrecharge/recharge', param, function (result) {
             if (result.status === 1) {
               var rest = result.unifiedOrderResult
@@ -89,13 +90,13 @@ export default {
                     function (res) {
                       if (res.err_msg === 'get_brand_wcpay_request:ok') {
                         var pam = {
-                          pepayId: rest.prepayId
+                          prepayId: rest.prepayId
                         }
-                        this.post('/rest/userrecharge/wxorderquery', pam, function (rel) {
+                        that.get('/rest/userrecharge/wxorderquery', pam, function (rel) {
                           if (rel != null && rel.status === 1) {
-                            this.toUrl('/my/vipsucc')
+                            that.toUrl('/my/vipsucc')
                           } else {
-                            this.toastShow('text', rel.message)
+                            that.toastShow('text', rel.message)
                           }
                         })
                       }// 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
@@ -108,7 +109,7 @@ export default {
             }
           }.bind(this))
         } else {
-          this.toastShow('text', '没有获取到微信标示，无法充值')
+          this.toastShow('text', '微信标示为空无法充值')
         }
       } else {
         this.toastShow('text', '充值只能在微信中使用')
@@ -118,6 +119,6 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/my.css";
+<style lang="less">
+@import "../../style-router/my.less";
 </style>

@@ -76,14 +76,14 @@
       <h4 class="guesttitle">成交客户</h4>
       <dl class="layout guestinfo">
         <dd class="td" v-for="(item, index) in userPhotos">
-          <img :src="item.picUrl" />
+          <img :src="item.thumbPicUrl" />
         </dd>
       </dl>
     </div>
     <!--car info  -->
     <div class=" usermod">
       <div class="btnbox">
-        <a href="tel:user.mobile" class="btnred">拨打电话</a>
+        <a href="javascript:void(0)" @click="tel" class="btnred">拨打电话</a>
       </div>
     </div>
   </section>
@@ -113,6 +113,9 @@ export default {
   mounted: function () {
   },
   methods: {
+    tel () {
+      window.location.href = 'tel:' + this.user.mobile
+    },
     getUserCarInfo () {
       let param = {
         carModelId: this.carModelId,
@@ -133,6 +136,6 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/userinfo.css";
+<style lang="less">
+@import "../../style-router/userinfo.less";
 </style>

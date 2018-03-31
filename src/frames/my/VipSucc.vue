@@ -1,7 +1,7 @@
 <template>
   <section>
     <div v-title data-title="我的VIP会员"></div>
-    <footerMenu tab="1"></footerMenu>
+    <!-- <footerMenu tab="1"></footerMenu> -->
     <!--vip  -->
     <div class="opensucbox">
         <div class="opensuc">
@@ -50,6 +50,6 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/my.css";
+<style lang="less">
+@import "../../style-router/my.less";
 </style>

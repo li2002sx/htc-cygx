@@ -18,6 +18,9 @@ const PhotoList = r => require.ensure([], () => r(require('../frames/my/PhotoLis
 const CarInfo = r => require.ensure([], () => r(require('../frames/my/CarInfo')), 'CarInfo')
 const Template = r => require.ensure([], () => r(require('../frames/car/Template')), 'Template')
 const AuthNotify = r => require.ensure([], () => r(require('../frames/wx/AuthNotify.vue')), 'AuthNotify')
+const TransIndex = r => require.ensure([], () => r(require('../frames/trans/Index.vue')), 'TransIndex')
+const TransResult = r => require.ensure([], () => r(require('../frames/trans/Result.vue')), 'TransResult')
+const TransTip = r => require.ensure([], () => r(require('../frames/trans/Tip.vue')), 'TransTip')
 export default [{
   path: '',
   redirect: '/index'
@@ -90,4 +93,13 @@ export default [{
 }, {
   path: '/wx/authnotify',
   component: AuthNotify
+}, {
+  path: '/trans',
+  component: TransIndex
+}, {
+  path: '/trans/result/:fromCityId/:toCityId/:carType/:transportType',
+  component: TransResult
+}, {
+  path: '/trans/tip',
+  component: TransTip
 }]

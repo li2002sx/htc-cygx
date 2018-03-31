@@ -5,6 +5,12 @@
 .mybox{
     .font(30px);
     .padding(30px);
+    .p_r;
+    .ico-modify{
+        .pos-atr(10px;10px);
+        .square(100px);
+        background-size: 32px;
+    }
     .loginbox{
         .padding(20px 0 110px);
         .tc;
@@ -195,17 +201,24 @@
     height: 345px;
     .lh(345px);
     .tc;
-    .margin(30px);
+    .margin(30px 30px -30px);
 }
 .addshared{
     .pt(30px);
+    .mb(-30px);
+    .sharelist{
+        .padding(0 30px);
+        dl{
+            padding-bottom: 0;
+        }
+    }
 }
 .addshareinfo{
     padding: 40px 30px 0;
     dd{
         .p_r;
         .mt(80px);
-        height: 75px;
+        height: 85px;
         border-bottom: 1px solid #ededed;
         label{
             .pos-alt(0;-34px);
@@ -226,7 +239,8 @@
             min-height: 30px;
             border: none;
             .padding(22.5px 0);
-            font-size: 20px;
+            font-size: 30px;
+            line-height: 1.4;
             resize: none;
             &::-webkit-input-placeholder {
                 color:#333;
@@ -252,4 +266,114 @@
     .bg-color(#e5e5e7);
     .padding(20px 30px);
     .mb(30px);
+}
+// 添加外露推广
+.bggray{
+    .bg-color(#efeff4);
+    height: 100%;
+}
+#app{
+    height: 100%;
+}
+.addpromote{
+    dl{
+        background: #fff;
+        border-top: 1px solid #d9d9d9;
+        border-bottom: 1px solid #d9d9d9;
+        .mt(30px);
+        dd{
+            .padding(0 30px 0 145px);
+            .font(30px;86px);
+            color: #333;
+            .p_r;
+            strong{
+                .pos-alt(30px;0);
+                .font(30px;86px);
+                width: 115px;
+            }
+            i{
+                color: red;
+            }
+            &:after{
+                border-top: 3px solid #d9d9d9;
+                border-right: 3px solid #d9d9d9;
+                content: "";
+                .square(20px);
+                transform: rotate(45deg);
+                .pos-atr(50%;30px);
+                .mt(-10px);
+            }
+            select{
+                width: 100%;
+                height: 86px;
+                color: #999;
+                .font(30px;86px);
+                &.on{
+                    color: #008fe9;
+                }
+            }
+        }
+    }
+    .btnbox{
+        .padding(60px 30px);
+        button{
+            width: 100%;
+        }
+    }
+}
+.promotelist{
+    dl{
+        background: #fff;
+        border-top: 1px solid #d9d9d9;
+        border-bottom: 1px solid #d9d9d9;
+        .mt(30px);
+        dd{
+            .padding(0 180px 0 30px);
+            .font(30px;86px);
+            color: #333;
+            .p_r;
+            i{
+                color: red;
+            }
+            .modify{
+                .font(30px;86px);
+                color: #ccc;
+                .pos-atr;
+                .padding(0 30px);
+            }
+            select{
+                width: 100%;
+                height: 86px;
+                color: #999;
+                .font(30px;86px);
+                &.on{
+                    color: #008fe9;
+                }
+            }
+        }
+    }
+    .btnbox{
+        .padding(60px 30px 30px);
+        button{
+            width: 100%;
+        }
+    }
+}
+.speclist{
+    dl{
+        background: #fff;
+        border-top: 1px solid #d9d9d9;
+        border-bottom: 1px solid #d9d9d9;
+        .mt(30px);
+        dd{
+            .margin(0 30px);
+            border-bottom: 1px solid #d9d9d9;
+            .font(30px;86px);
+            color: #333;
+            .p_r;
+            &:last-child{
+                border-bottom: none;
+            }
+        }
+    }
 }

@@ -3,10 +3,8 @@
     <div v-title data-title="添加修改共享车源"></div>
     <!--mybox  -->
     <div class="mysharebox">
-      <!-- <div class="addshare">
-                          选择模板
-                        </div> -->
-      <div class="addshared">
+      <div class="addshare" @click="toUrl('/car/searchlist/0')" v-if="carModelId==0">选择模板</div>
+      <div class="addshared" v-else>
         <div class="sharelist">
           <dl>
             <dd>
@@ -24,7 +22,7 @@
         <dl>
           <dd>
             <label>价格 （万元）</label>
-            <input type="text" class="inputxt" placeholder="请输入价格" v-model="userCarInfo.price" />
+            <input type="number" class="inputxt" placeholder="请输入价格" v-model="userCarInfo.price" />
           </dd>
           <dd>
             <label>配置</label>
@@ -38,12 +36,15 @@
             <label>备注</label>
             <input type="text" class="inputxt" placeholder="请输入备注" v-model="userCarInfo.remark" />
           </dd>
-          <dt>
-            <button class="btnred" @click="save">保存</button>
-          </dt>
+          <!-- <dt>
+                    <button class="btnred" @click.once="save">保存</button>
+                  </dt> -->
         </dl>
       </div>
       <!--addinfo end  -->
+      <div class="btnsave">
+        <button class="btnred" @click="save">保存</button>
+      </div>
     </div>
     <!--mybox end  -->
   </section>
@@ -58,8 +59,8 @@ export default {
   },
   data () {
     return {
-      carModelId: this.$route.params.carModelId,
-      userCarInfoId: this.$route.params.infoId,
+      carModelId: parseInt(this.$route.params.carModelId) || 0,
+      userCarInfoId: parseInt(this.$route.params.infoId) || 0,
       carModel: {},
       userCarInfo: {},
       user: {}
@@ -77,20 +78,27 @@ export default {
         carModelId: this.carModelId,
         userCarInfoId: this.userCarInfoId
       }
-      this.get('/rest/usercar/info', param, function (result) {
-        if (result.status === 1) {
-          this.carModel = result.carModel
-          this.userCarInfo = result.userCarInfo
-          this.user = result.user
-        } else {
-          this.toastShow('text', result.message)
-        }
-      }.bind(this))
+      if (param.carModelId > 0) {
+        this.get('/rest/usercar/info', param, function (result) {
+          if (result.status === 1) {
+            this.carModel = result.carModel
+            this.userCarInfo = result.userCarInfo
+            this.user = result.user
+          } else {
+            this.toastShow('text', result.message)
+          }
+        }.bind(this))
+      }
     },
     save () {
-      let price = this.userCarInfo.price
-      if (price === null) {
-        this.toastShow('text', '价格不能为空')
+      if (this.carModelId === 0) {
+        this.toastShow('text', '请选择一个模板')
+        return
+      }
+
+      let price = parseFloat(this.userCarInfo.price) || 0
+      if (price === 0 || price > 100000) {
+        this.toastShow('text', '请填写正确的价格')
         return
       }
 
@@ -106,8 +114,9 @@ export default {
 
       this.post('/rest/usercar/save', this.userCarInfo, function (result) {
         if (result.status === 1) {
-          this.toastShow('success', '操作成功')
+          this.toastShow('success', '保存成功')
           this.toUrl('/my/car')
+          // this.toUrl('/car/template/' + this.carModelId + '/' + result.carInfoId)
         } else {
           this.toastShow('text', result.message)
         }
@@ -117,6 +126,15 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/my.css";
+<style lang="less">
+@import "../../style-router/my.less";
+.btnsave {
+  text-align: center;
+  padding-top: 50px;
+}
+
+.btnsave button {
+  width: 490px;
+  bottom: 20px;
+}
 </style>

@@ -47,17 +47,21 @@ export default {
     setTime () {
       let settime = setInterval(function () {
         let btnCode = document.getElementById('btn_code')
-        if (this.time <= 0) {
+        if (btnCode === null) {
           clearInterval(settime)
-          btnCode.removeAttribute('disabled')
-          this.codeTip = '获取验证码'
-          this.time = 60
-          return
         } else {
-          btnCode.setAttribute('disabled', 'disabled')
+          if (this.time <= 0) {
+            clearInterval(settime)
+            btnCode.removeAttribute('disabled')
+            this.codeTip = '获取验证码'
+            this.time = 60
+            return
+          } else {
+            btnCode.setAttribute('disabled', 'disabled')
+          }
+          this.time--
+          this.codeTip = this.time + 's'
         }
-        this.time--
-        this.codeTip = this.time + 's'
       }.bind(this), 1000)
     },
     geetest: function () {

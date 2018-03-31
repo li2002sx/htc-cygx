@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     addCar (carModelId) {
-      this.$router.push('/my/editcar/' + carModelId + '/0')
+      this.toUrl('/my/editcar/' + carModelId + '/0')
     },
     getCarModels () {
       let param = {
@@ -69,6 +69,6 @@ export default {
 }
 </script>
 
-<style>
-@import "../../style-router/my.css";
+<style lang="less">
+@import "../../style-router/my.less";
 </style>
